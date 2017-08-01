@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 指定Spring配置文件的Schema信息 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/travel" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingLocations">
+				<value>classpath*:com/cn/ncist/rq/*/vo/*Model.hbm.xml</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 配置事务容器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<!-- 定义事务规则 即：配置哪些方法要加入事务控制 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 以下方法都是可能设计修改的方法，就无法设置为只读 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="REQUIRED" />
+			<!-- 让所有的方法都加入事务管理，为了提高效率，可以把一些查询之类的方法设置为只读的事务 -->
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 定义事务入口  Spring是通过AOP来进行事务管理的-->
+	<aop:config>
+		<!-- 设置pointCut表示哪些方法要加入事务处理 -->
+		<!-- 以下的事务是声明在DAO中，但是通常都会在Service来处理多个业务对象逻辑的关系，注入删除，更新等，此时如果在执行了一个步骤之后抛出异常 
+			就会导致数据不完整，所以事务不应该在DAO层处理，而应该在service，这也就是Spring所提供的一个非常方便的工具，声明式事务 -->
+		<aop:pointcut id = "allDaoMethod" expression="execution(* com.book.hbm.dao.impl.*.*(..))" />
+		<!-- 通过advisor来确定具体要加入事务控制的方法 -->
+		<aop:advisor advice-ref = "txAdvice" pointcut-ref="allDaoMethod" />
+
+	</aop:config>
+	
+
+	<!-- 用户管理  -->
+	<bean id="managerUserService" class="com.cn.ncist.rq.user.service.impl.ManagerUserServiceImpl">
+		<property name="userDao" ref="userDao" ></property>
+	</bean>
+	
+	<bean id="LoginServlet" class="com.cn.ncist.rq.api.LoginServlet">
+		<property name="mus" ref="managerUserService" ></property>
+	</bean>
+	
+ 	<bean id="userDao" class="com.cn.ncist.rq.user.dao.impl.UserDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<!-- 分页管理 -->
+	<bean id="pageService" class="com.cn.ncist.rq.page.service.impl.PageServiceImpl" >
+		<property name="pageDao" ref="pageDao" ></property>
+	</bean>
+	
+ 	<bean id="pageDao" class="com.cn.ncist.rq.page.dao.impl.PageDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<!-- 游记管理 -->
+	<bean id="managerNoteService" class="com.cn.ncist.rq.note.service.impl.ManagerNoteServiceImpl" >
+		<property name="noteDao" ref="noteDao" ></property>
+		<property name="userDao" ref="userDao" ></property>
+	</bean>
+	
+	<bean id="NoteServlet" class="com.cn.ncist.rq.api.NoteServlet">
+		<property name="mns" ref="managerNoteService" ></property>
+		<property name="mds" ref="managerDestinationService" ></property>
+	</bean>
+	
+ 	<bean id="noteDao" class="com.cn.ncist.rq.note.dao.impl.NoteDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<!-- 问题管理 -->
+	<bean id="managerQuestionService" class="com.cn.ncist.rq.question.service.impl.ManagerQuestionServiceImpl" >
+		<property name="questionDao" ref="questionDao" ></property>
+	</bean>
+	
+	<bean id="QuestionServlet" class="com.cn.ncist.rq.api.QuestionServlet">
+		<property name="mqs" ref="managerQuestionService" ></property>
+	</bean>
+	
+ 	<bean id="questionDao" class="com.cn.ncist.rq.question.dao.impl.QuestionDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<!-- 地区管理 -->
+	<bean id="managerProvinceService" class="com.cn.ncist.rq.province.service.impl.ManagerProvinceServiceImpl" >
+		<property name="provinceDao" ref="provinceDao" ></property>
+	</bean>
+	
+ 	<bean id="provinceDao" class="com.cn.ncist.rq.province.dao.impl.ProvinceDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<!-- 目的地管理 -->
+	<bean id="managerDestinationService" class="com.cn.ncist.rq.destination.service.impl.ManagerDestinationServiceImpl" >
+		<property name="destinationDao" ref="destinationDao" ></property>
+		<property name="provinceDao" ref="provinceDao" ></property>
+	</bean>
+	
+	<bean id="DestinationServlet" class="com.cn.ncist.rq.api.DestinationServlet">
+		<property name="mds" ref="managerDestinationService" ></property>
+		<property name="mps" ref="managerProvinceService" ></property>
+	</bean>
+	
+ 	<bean id="destinationDao" class="com.cn.ncist.rq.destination.dao.impl.DestinationDaoImpl" >
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>	
+</beans>
+	
+	

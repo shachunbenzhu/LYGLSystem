@@ -1,0 +1,68 @@
+@charset "gb2312";
+
+.titlename {
+	font-size: 28px;
+	font-style:normal;
+	font-family:"¿¬Ìå";
+	color:#00CCCC;
+}
+
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+.doubleselect br{
+	display: none;
+}
+
+.totalpage {
+	color:#FF66FF;
+	font-size:12px ;
+	text-align:center; 
+	border:hidden;
+}
+
+.wenbenkuang {
+	text-align:center;
+	border:hidden;
+	background-color:#fcefe8;
+}
+
+.addwenbenkuang {
+	text-align:center;
+	background-color:#fcefe8;
+}
+
+.xq {
+	text-align:center;
+	text-decoration:underline;
+	border:hidden;
+	background-color:#fcefe8;
+}
+
+.gl {
+	text-align:center;
+	background-color:#fcefe8;
+	color: #00CCCC;
+	
+}
+
+.tianjia {
+	text-align:center;
+	text-decoration:underline;
+	background-color:#fcefe8;
+}
+

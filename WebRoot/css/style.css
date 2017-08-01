@@ -1,0 +1,35 @@
+@charset "gb2312";
+
+.bql {
+	font-size: 16px;
+	font-style: normal;
+	font-family:ºÚÌå;
+	color:#333;
+}
+
+.bqlname {
+	font-size: 18px;
+	font-style: normal;
+	font-family:ºÚÌå;
+	color:#000;
+}
+
+a:link {
+	color:#333;
+	text-decoration: none;
+}
+
+a:visited {
+	color:#333;
+	text-decoration: none;
+}
+
+a:hover {
+	color:#FF66FF;
+	text-decoration: none;
+}
+
+a:active {
+	color:#FF66FF;
+	text-decoration: none;
+}

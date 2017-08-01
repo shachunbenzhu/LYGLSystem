@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4">
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+
+
+	<!-- 用于初始化Spring容器的Listener -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+	<!-- 定义Struts2的核心控制器：FilterDispathcer的Filter -->
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+    </filter>
+	<!-- FilterDispatcher用来初始化struts2并且处理所有的WEB请求。这样的话所有的必须加.action，包括form中的action，否则若写成/*，则吧Servlet也拦截，使用struts2 -->
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern><!-- 不可以写为/*.action -->
+    </filter-mapping>
+    
+    <!-- zh-cn encoding 
+    <filter>
+		<filter-name>struts-cleanup</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
+	</filter>
+    <filter-mapping>
+        <filter-name>struts-cleanup</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+	<filter>  
+		<filter-name>characterEncoding</filter-name>  
+		<filter-class>com.cn.ncist.rq.filter.CharacterEncodingFilter</filter-class>  
+	</filter>  
+	<filter-mapping>  
+		<filter-name>characterEncoding</filter-name>  
+		<url-pattern>/*</url-pattern>  
+	</filter-mapping> -->
+	
+	<servlet>
+    	<servlet-name>LoginServlet</servlet-name>
+    	<servlet-class>com.cn.ncist.rq.servlet.ServletToBeanProxy</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+	    <url-pattern>/servlet/LoginServlet</url-pattern>
+	</servlet-mapping>
+  
+	<servlet>
+		<servlet-name>NoteServlet</servlet-name>
+		<servlet-class>com.cn.ncist.rq.servlet.ServletToBeanProxy</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NoteServlet</servlet-name>
+		<url-pattern>/servlet/NoteServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DestinationServlet</servlet-name>
+		<servlet-class>com.cn.ncist.rq.servlet.ServletToBeanProxy</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DestinationServlet</servlet-name>
+		<url-pattern>/servlet/DestinationServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>QuestionServlet</servlet-name>
+		<servlet-class>com.cn.ncist.rq.servlet.ServletToBeanProxy</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>QuestionServlet</servlet-name>
+		<url-pattern>/servlet/QuestionServlet</url-pattern>
+	</servlet-mapping>
+  
+	<welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

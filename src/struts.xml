@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.custom.i18n.resources" value="messageResource"/>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+
+    <package name="lee" extends="struts-default">
+
+		<interceptors>
+            <interceptor name="authority" class="com.cn.ncist.rq.action.interceptor.AuthorityInterceptor"/>
+            <interceptor-stack name="auctionStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authority"/>
+            </interceptor-stack>
+		</interceptors> 
+
+		<default-interceptor-ref name="auctionStack"/>
+
+		<global-results>
+			<!-- 下面定义的结果对所有的Action都有效 -->
+			<result name="login">/login.jsp</result>
+			<result name="exception">/jsp/error.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<!-- 指Action抛出ManagerException异常时，转入名为exception的结果。 -->
+			<exception-mapping exception="com.cn.ncist.rq.exception.ManagerException" result="exception"/>
+			<!-- 指Action抛出Exception异常时，转入名为exception的结果。 -->
+			<exception-mapping exception="java.lang.Exception" result="exception"/>
+		</global-exception-mappings>
+
+
+		<action name="index">
+            <result name="success">/jsp/login.jsp</result>
+        </action> 
+        
+        <!-- =================================用户管理=================================== -->
+        <!-- 登录 -->
+		<action name="login" class="com.cn.ncist.rq.user.action.LoginRegisterAction">
+			<result name="input">/login.jsp</result>
+            <result name="success">/jsp/main.jsp</result> 
+            <result name="failure">/login.jsp</result>  
+            <interceptor-ref name="defaultStack"/>  
+        </action>
+        
+        <!-- 注册 -->
+        <!-- <action name="testUserName" class="com.cn.ncist.rq.user.action.ManagerUserAction">
+			<result name="input">/jsp/register.jsp</result>
+            <result name="success">/jsp/register.jsp</result> 
+            <result name="failure">/jsp/register.jsp</result>  
+        </action> -->
+        
+        <action name="register" class="com.cn.ncist.rq.user.action.LoginRegisterAction" method="register">
+            <result name="success">/login.jsp</result>    
+            <result name="failure">/jsp/register.jsp</result> 
+            <result name="input">/jsp/register.jsp</result> 
+        </action>
+        
+        <action name="updatePwd" class="com.cn.ncist.rq.user.action.ManagerUserAction" method="updatePwd">
+            <result name="success">/login.jsp</result>    
+            <result name="failure">/jsp/updatePwd.jsp</result> 
+        </action>
+        
+        
+        <action name="managerUser" class="com.cn.ncist.rq.user.action.ManagerUserAction">
+            <result name="success">/jsp/managerUser.jsp</result>    
+        </action>
+        
+        	<!-- 根据条件查询 -->
+        <action name="queryUser" class="com.cn.ncist.rq.user.action.ManagerUserAction" method="queryUser">
+            <result name="success">/jsp/managerUser.jsp</result>    
+        </action>
+        
+        	<!-- 查询所有User -->
+        <action name="queryAllUser" class="com.cn.ncist.rq.user.action.ManagerUserAction">
+            <result name="success">/jsp/managerUser.jsp</result>    
+        </action>
+        
+        	<!-- 删除User -->
+        <action name="deleteUser" class="com.cn.ncist.rq.user.action.ManagerUserAction" method="deleteUser">
+            <result name="success">/jsp/managerUser.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        	<!-- 修改User -->
+        <action name="updateUser" class="com.cn.ncist.rq.user.action.ManagerUserAction" method="updateUser">
+            <result name="success">/jsp/managerUser.jsp</result>   
+            <result name="failure">/jsp/error.jsp</result> 
+        </action>
+        
+        	<!-- 添加User -->
+        <action name="addUser" class="com.cn.ncist.rq.user.action.ManagerUserAction" method="addUser">
+            <result name="success">/jsp/managerUser.jsp</result>  
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        <!-- =================================分页管理=================================== -->
+        <action name="pageAction" class="com.cn.ncist.rq.note.action.ManagerNoteAction">
+            <result name="success">/jsp/managerNote.jsp</result>    
+        </action>
+        
+        <!-- =================================游记管理=================================== -->
+        <action name="managerNote" class="com.cn.ncist.rq.note.action.ManagerNoteAction">
+            <result name="success">/jsp/managerNote.jsp</result>    
+        </action>
+        
+        	<!-- 根据条件查询，其中method="{1}表示method值和name值相同 -->
+        <action name="queryNote" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="queryNote">
+            <result name="success">/jsp/managerNote.jsp</result>    
+        </action>
+        
+        <!-- 根据id查询Note详情，其中method="{1}表示method值和name值相同 -->
+        <action name="queryNoteDetile" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="queryNoteDetile">
+            <result name="success">/jsp/managerNoteDetile.jsp</result>    
+        </action>
+        
+        	<!-- 查询主要Note,不写method，默认调用execute方法 -->
+        <action name="queryMainNote" class="com.cn.ncist.rq.note.action.ManagerNoteAction">
+            <result name="success">/jsp/managerNote.jsp</result>    
+        </action>
+        
+        	<!-- 查询用户Note -->
+        <action name="queryUserNote" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="queryUserNote">
+            <result name="success">/jsp/managerNote.jsp</result>    
+        </action>
+        
+        	<!-- 删除Note -->
+        <action name="deleteNote" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="deleteNote">
+            <result name="success">/jsp/managerNote.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        <!-- 修改NoteDetile -->
+        <action name="updateNoteDetile" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="updateNoteDetile">
+            <param name="savePath">/images</param>
+            <result name="success">/jsp/managerNoteDetile.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        	<!-- 上传多个文件时拦截器 
+        <action name="multiUpload" class="com.cn.ncist.rq.note.action.MultiUploadAction">
+            <param name="savePath">/images</param>
+            <interceptor-ref name="fileUpload">
+            	<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
+            	<param name="maximumSize">200000</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <param name="savePath">/images</param>
+            <result name="success">/jsp/noteDetileManager.jsp</result>    
+        </action>-->
+        
+        <!-- =================================评论管理=================================== -->
+        	<!-- 查询Comment -->
+        <action name="queryAllComment" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="queryAllComment">
+            <result name="success">/jsp/managerNoteDetile.jsp</result>    
+        </action>
+        
+        	<!-- 删除Comment -->
+        <action name="deleteComment" class="com.cn.ncist.rq.note.action.ManagerNoteAction" method="deleteComment">
+            <result name="success">/jsp/managerNoteDetile.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        <!-- =================================问题管理=================================== -->
+        <action name="managerQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction">
+            <result name="success">/jsp/managerQuestion.jsp</result>    
+        </action>
+        
+        	<!-- 根据条件查询 -->
+        <action name="queryQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction" method="queryQuestion">
+            <result name="success">/jsp/managerQuestion.jsp</result>    
+        </action>
+        
+        	<!-- 查询所有Question -->
+        <action name="queryAllQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction">
+            <result name="success">/jsp/managerQuestion.jsp</result>    
+        </action>
+        
+        	<!-- 删除Question -->
+        <action name="deleteQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction" method="deleteQuestion">
+            <result name="success">/jsp/managerQuestion.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        	<!-- 修改Question -->
+        <action name="updateQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction" method="updateQuestion">
+            <result name="success">/jsp/managerQuestion.jsp</result>   
+            <result name="failure">/jsp/error.jsp</result> 
+        </action>
+        
+        	<!-- 添加Question -->
+        <action name="addQuestion" class="com.cn.ncist.rq.question.action.ManagerQuestionAction" method="addQuestion">
+            <result name="success">/jsp/managerQuestion.jsp</result>  
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        
+        <!-- =================================地区管理=================================== -->
+        <action name="managerProvince" class="com.cn.ncist.rq.province.action.ManagerProvinceAction">
+            <result name="success">/jsp/managerProvince.jsp</result>    
+        </action>
+        
+        	<!-- 根据条件查询 -->
+        <action name="queryProvince" class="com.cn.ncist.rq.province.action.ManagerProvinceAction" method="queryProvince">
+            <result name="success">/jsp/managerProvince.jsp</result>    
+        </action>
+        
+        	<!-- 查询所有Question -->
+        <action name="queryAllProvince" class="com.cn.ncist.rq.province.action.ManagerProvinceAction">
+            <result name="success">/jsp/managerProvince.jsp</result>    
+        </action>
+        
+        	<!-- 删除Question -->
+        <action name="deleteProvince" class="com.cn.ncist.rq.province.action.ManagerProvinceAction" method="deleteProvince">
+            <result name="success">/jsp/managerProvince.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        	<!-- 添加Province -->
+        <action name="addProvince" class="com.cn.ncist.rq.province.action.ManagerProvinceAction" method="addProvince">
+            <result name="success">/jsp/managerProvince.jsp</result>  
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        <!-- 添加Nation -->
+        <action name="addNation" class="com.cn.ncist.rq.province.action.ManagerProvinceAction" method="addNation">
+            <result name="success">/jsp/managerProvince.jsp</result>  
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        
+        <!-- =================================目的地管理=================================== -->
+        <action name="managerDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction">
+            <result name="success">/jsp/managerDestination.jsp</result>    
+        </action>
+        
+        	<!-- 根据条件查询 -->
+        <action name="queryDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction" method="queryDestination">
+            <result name="success">/jsp/managerDestination.jsp</result>    
+        </action>
+        
+        	<!-- 查询所有Question -->
+        <action name="queryAllDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction">
+            <result name="success">/jsp/managerDestination.jsp</result>    
+        </action>
+        
+        	<!-- 删除Question -->
+        <action name="deleteDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction" method="deleteDestination">
+            <result name="success">/jsp/managerDestination.jsp</result> 
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        	<!-- 修改Question -->
+        <action name="updateDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction" method="updateDestination">
+            <result name="success">/jsp/managerDestination.jsp</result>   
+            <result name="failure">/jsp/error.jsp</result> 
+        </action>
+        
+        	<!-- 添加Question -->
+        <action name="addDestination" class="com.cn.ncist.rq.destination.action.ManagerDestinationAction" method="addDestination">
+            <result name="success">/jsp/managerDestination.jsp</result>  
+            <result name="failure">/jsp/error.jsp</result>   
+        </action>
+        
+        
+
+    </package> 
+</struts>

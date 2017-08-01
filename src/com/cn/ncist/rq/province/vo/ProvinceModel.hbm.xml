@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.province.vo.ProvinceModel"  table="tb_province">
+  <id name="province_id" column="province_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="province_name" column="province_name" type="string" length="50"></property>
+  <property name="nation_id" column="nation_id" type="integer" length="11"></property>
+ </class>
+</hibernate-mapping>
+

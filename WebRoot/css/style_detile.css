@@ -1,0 +1,26 @@
+@charset "gb2312";
+
+.titlename {
+	font-size: 28px;
+	font-style:normal;
+	font-family:"¿¬Ìå";
+	color:#00CCCC;
+}
+
+form input[type="text"] {
+	text-align:center; 
+	border:hidden;
+	background-color:#fcefe8;
+}
+
+.wenbenkuang {
+	text-align:center;
+	border:hidden;
+	background-color:#fcefe8;
+}
+
+.texta {
+	text-align:center;
+	border:hidden;
+	background:transparent;
+}

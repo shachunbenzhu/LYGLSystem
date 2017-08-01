@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.destination.vo.DestinationModel"  table="tb_destination">
+  <id name="destination_id" column="destination_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="destination_name" column="destination_name" type="string" length="50"></property>
+  <property name="destination_pinyin" column="destination_pinyin" type="string" length="50"></property>
+  <property name="destination_number" column="destination_number" type="integer" length="11"></property>
+  <property name="nation_id" column="nation_id" type="integer" length="11"></property>
+  <property name="province_id" column="province_id" type="integer" length="11"></property>
+  <property name="destination_img" column="destination_img" type="string" length="50"></property>
+  <property name="destination_desc" column="destination_desc" type="string" length="1000"></property>
+  <property name="destination_imgarr" column="destination_imgarr" type="string" length="1000"></property>
+ </class>
+</hibernate-mapping>
+

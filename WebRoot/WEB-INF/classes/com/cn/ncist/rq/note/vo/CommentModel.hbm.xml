@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.note.vo.CommentModel"  table="tb_comment">
+  <id name="comment_id" column="comment_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="comment_date" column="comment_date" type="string" length="50"></property>
+  <property name="comment_content" column="comment_content" type="string" length="1000"></property>
+  <property name="user_id" column="user_id" type="integer" length="11"></property>
+  <property name="note_id" column="note_id" type="integer" length="11"></property>
+  <property name="response_date" column="response_date" type="string" length="50"></property>
+  <property name="response_content" column="response_content" type="string" length="1000"></property>
+ </class>
+</hibernate-mapping>
+

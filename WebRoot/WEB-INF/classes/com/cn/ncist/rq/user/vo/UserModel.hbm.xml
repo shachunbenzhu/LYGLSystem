@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.user.vo.UserModel"  table="tb_user">
+  <id name="user_id" column="user_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="user_name" column="user_name" type="string" length="50" not-null="true"></property>
+  <property name="user_pwd" column="user_pwd" type="string" length="50" not-null="true"></property>
+  <property name="user_repwd" column="user_repwd" type="string" length="50"></property>
+  <property name="user_pocket" column="user_pocket" type="string" length="50"></property>
+  <property name="user_point" column="user_point" type="string" length="50"></property>
+  <property name="user_touxiang" column="user_touxiang" type="string" length="50"></property>
+  <property name="note_id" column="note_id" type="integer" length="11"></property>
+ </class>
+</hibernate-mapping>
+

@@ -1,0 +1,40 @@
+@charset "gb2312";
+
+.titlename {
+	font-size: 28px;
+	font-style:normal;
+	font-family:"楷体";
+	color:#00CCCC;
+}
+
+.btn_2 {/* 2个字按钮底图 */
+    background:url(images/btn_2.jpg) center top no-repeat;
+	border:0;
+	color:#FFFFFF;
+	line-height:23px;
+	width:48px;
+	height:23px;
+	margin-left:10px;
+}
+
+
+.xxpage_td2 {
+	border-bottom:#cdd0d3 1px dashed;
+	text-align:left;
+	padding-left:5px;
+	line-height:28px;
+	height:28px;
+}
+
+.xxpage {/* 弹出页面内部 */
+    /*width:680px;*/
+	margin:0px auto;
+	background-color:#FFFFFF;
+	padding:10px;
+	border:#cdd0d3 1px solid;
+}
+
+
+.point {/* 详细页面列表样式 */
+	color:#FF0000;
+}

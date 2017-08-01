@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.question.vo.QuestionModel"  table="tb_question">
+  <id name="question_id" column="question_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="question_content" column="question_content" type="string" length="1000"></property>
+  <property name="question_answer" column="question_answer" type="string" length="1000"></property>
+  <property name="question_label" column="question_label" type="string" length="50"></property>
+ </class>
+</hibernate-mapping>
+

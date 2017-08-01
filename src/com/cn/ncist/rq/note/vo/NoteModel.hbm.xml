@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate.test.orphan">
+ <class name="com.cn.ncist.rq.note.vo.NoteModel"  table="tb_note">
+  <id name="note_id" column="note_id" type="integer">
+  	<generator class="increment"></generator>
+  </id>
+  <property name="note_title" column="note_title" type="string" length="100"></property>
+  <property name="note_date" column="note_date" type="string" length="50"></property>
+  <property name="note_days" column="note_days" type="integer" length="11"></property>
+  <property name="note_expend" column="note_expend" type="string" length="50"></property>
+  <property name="note_partner" column="note_partner" type="string" length="50"></property>
+  <property name="note_zannumber" column="note_zannumber" type="integer" length="11"></property>
+  <property name="note_seenumber" column="note_seenumber" type="integer" length="11"></property>
+  <property name="note_commentnumber" column="note_commentnumber" type="integer" length="11"></property>
+  <property name="user_id" column="user_id" type="integer" length="11"></property>
+  <property name="note_bgimg" column="note_bgimg" type="string" length="1000"></property>
+  <property name="note_img" column="note_img" type="string" length="1000"></property>
+  <property name="note_address" column="note_address" type="string" length="100"></property>
+  <property name="note_content" column="note_content" type="string" length="1000"></property>
+ </class>
+</hibernate-mapping>
+
